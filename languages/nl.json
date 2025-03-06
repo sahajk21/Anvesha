@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"McDutchie"
+			"McDutchie",
+			"Siebrand"
 		]
 	},
 	"itemCount": "{{PLURAL:$1|Er is één item dat aan deze beschrijving voldoet.|Er zijn $1 items die aan deze beschrijving voldoen.}}",
@@ -13,6 +14,8 @@
 	"noItems": "Geen enkel item voldoet aan deze beschrijving.",
 	"displayItemsError": "De poging om de lijst met items weer te geven duurde te lang. Overweeg om meer filters toe te voegen.",
 	"gettingValues": "Waarden ophalen voor filter $1…",
+	"filterValuePlaceholder": "Filterwaarde invoeren",
+	"customFilterValue": "U kunt ook een aangepaste waarde voor dit filter kiezen:",
 	"noAdditionalValues": "Er zijn geen andere waarden voor het filter $1.",
 	"filterError": "De poging om waarden op te halen duurde te lang voor het filter $1.",
 	"filterTimeout": "(Het verkrijgen van een volledige verzameling waarden voor het filter $1 duurde te lang. In plaats daarvan is hier een mogelijk onvolledige verzameling.)",
@@ -23,6 +26,7 @@
 	"specificClass": "Overgaan naar een meer specifieke klasse:",
 	"generalClass": "Overgaan naar een meer algemene klasse:",
 	"viewList": "Lijst met items bekijken",
+	"backToMain": "Terug naar de startpagina",
 	"results": "({{PLURAL:$1|1 resultaat|$1 resultaten}})",
 	"applyLinkedFilter": "Filter toepassen op $1",
 	"chooseLinkedFilter": "Kies een filter uit een van de volgende klassen:"
