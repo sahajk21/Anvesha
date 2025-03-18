@@ -288,6 +288,7 @@ function getDateObject(dateStr) {
         return { year: "-" + "0".repeat(6 - s[1].length) + s[1], month: s[2], day: s[3] }
     }
 }
+
 function generateDateBuckets(rawData) {
     dates = []
     for (let i = 0; i < rawData.length; i++) {
@@ -310,77 +311,49 @@ function generateDateBuckets(rawData) {
     var monthDifference = (12 * yearDifference) + (latestMonth - earliestMonth);
     var dayDifference = (30 * monthDifference) + (latestDay - earliestDay);
     var propertyValues = [];
-    if (yearDifference > 300) {
-        curYear = iniYear = Math.floor(earliestYear / 100) * 100;
+    var possibleBucketSizes = [
+        { minYearDifference: 3000, bucketSize: 1000 },
+        { minYearDifference: 300, bucketSize: 100 },
+        { minYearDifference: 150, bucketSize: 50 },
+        { minYearDifference: 80, bucketSize: 10 },
+        { minYearDifference: 15, bucketSize: 5 },
+    ];
+
+    for (var i = 0; i < possibleBucketSizes.length; i++) {
+        if (yearDifference <= possibleBucketSizes[i].minYearDifference) {
+            continue;
+        }
+        var bucketSize = possibleBucketSizes[i].bucketSize;
+        curYear = iniYear = Math.floor(earliestYear / bucketSize) * bucketSize;
         while (curYear <= latestYear) {
             if (curYear < 0) {
                 propertyValues.push({
-                    bucketName: yearToBCFormat(curYear) + " - " + yearToBCFormat(curYear + 99),
+                    bucketName: yearToBCFormat(curYear) + " - " + yearToBCFormat(curYear + bucketSize - 1),
                     bucketLL: { year: curYear, month: "01", day: "01" },
-                    bucketUL: { year: curYear + 99, month: "12", day: "31" },
+                    bucketUL: { year: curYear + bucketSize - 1, month: "12", day: "31" },
                     size: 1,
                     numValues: 0
                 });
             }
             else {
                 propertyValues.push({
-                    bucketName: (curYear + 1) + " - " + (curYear + 100),
+                    bucketName: (curYear + 1) + " - " + (curYear + bucketSize),
                     bucketLL: { year: curYear + 1, month: "01", day: "01" },
-                    bucketUL: { year: curYear + 100, month: "12", day: "31" },
+                    bucketUL: { year: curYear + bucketSize, month: "12", day: "31" },
                     size: 1,
                     numValues: 0
                 });
             }
-            curYear = curYear + 100;
+            curYear = curYear + bucketSize;
         }
         for (let i = 0; i < dates.length; i++) {
-            index = Math.floor((Number(dates[i].year) - iniYear) / 100);
+            index = Math.floor((Number(dates[i].year) - iniYear) / bucketSize);
             propertyValues[index].numValues += 1;
         }
-    } else if (yearDifference > 150) {
-        curYear = iniYear = Math.floor(earliestYear / 50) * 50;
-        while (curYear <= latestYear) {
-            if (curYear < 0) {
-                propertyValues.push({
-                    bucketName: yearToBCFormat(curYear) + " - " + yearToBCFormat(curYear + 49),
-                    bucketLL: { year: curYear, month: "01", day: "01" },
-                    bucketUL: { year: curYear + 49, month: "12", day: "31" },
-                    size: 1,
-                    numValues: 0
-                });
-            }
-            else {
-                propertyValues.push({
-                    bucketName: (curYear + 1) + " - " + (curYear + 50),
-                    bucketLL: { year: curYear + 1, month: "01", day: "01" },
-                    bucketUL: { year: curYear + 50, month: "12", day: "31" },
-                    size: 1,
-                    numValues: 0
-                });
-            }
-            curYear = curYear + 50
-        }
-        for (let i = 0; i < dates.length; i++) {
-            index = Math.floor((Number(dates[i].year) - iniYear) / 50);
-            propertyValues[index].numValues += 1;
-        }
-    } else if (yearDifference > 15) {
-        curYear = iniYear = Math.floor(earliestYear / 5) * 5;
-        while (curYear <= latestYear) {
-            propertyValues.push({
-                bucketName: yearToBCFormat(curYear) + " - " + yearToBCFormat(curYear + 4),
-                bucketLL: { year: curYear, month: "01", day: "01" },
-                bucketUL: { year: curYear + 4, month: "12", day: "31" },
-                size: 1,
-                numValues: 0
-            });
-            curYear = curYear + 5
-        }
-        for (let i = 0; i < dates.length; i++) {
-            index = Math.floor((Number(dates[i].year) - iniYear) / 5);
-            propertyValues[index].numValues += 1;
-        }
-    } else if (yearDifference > 2) {
+        return propertyValues;
+    }
+
+    if (yearDifference > 2) {
         curYear = earliestYear;
         while (curYear <= latestYear) {
             propertyValues.push({
@@ -400,10 +373,20 @@ function generateDateBuckets(rawData) {
         var curYear = earliestYear;
         var curMonth = earliestMonth;
         while (curYear < latestYear || (curYear == latestYear && curMonth <= latestMonth)) {
+            if (curMonth == 2) {
+                // Fun with leap years... does this logic apply to BC dates
+                // also? Let's just say that it does.
+                daysInMonth = ((curYear % 4 == 0 && curYear % 100 != 0) || (curYear % 400 == 0)) ? 29 : 28;
+            } else if (curMonth == 4 || curMonth == 6 || curMonth == 9 || curMonth == 11) {
+                daysInMonth = 30;
+            } else {
+                daysInMonth = 31;
+            }
+
             propertyValues.push({
                 bucketName: monthNumberToString(curMonth) + " " + yearToBCFormat(curYear),
                 bucketLL: { year: curYear, month: curMonth, day: "01" },
-                bucketUL: { year: curYear, month: curMonth, day: "30" },
+                bucketUL: { year: curYear, month: curMonth, day: daysInMonth },
                 size: 3,
                 numValues: 0
             });
@@ -443,8 +426,9 @@ function generateDateBuckets(rawData) {
             numValues: dates.length
         });
     }
-    return propertyValues
+    return propertyValues;
 }
+
 function getTimePrecision(ear, lat, num=0) {
     earliestDate = getDateObject(ear)
     latestDate = getDateObject(lat)
