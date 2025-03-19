@@ -523,20 +523,20 @@ filtervalues = Vue.component('filter-values', {
          Get linked filters related to current filter using value type constraint.
          Exclude all filters with property types other than Time, Quantity and Item.
          Exclude all properties with distinct values constraint.
-         P2302: Property Constraint
-         P2308: Class qualifier
         */
         var sparqlQuery = "SELECT DISTINCT ?value ?valueLabel ?class ?classLabel ?property WHERE {\n" +
-            "wd:" + this.currentFilter.value + " p:P2302 ?constraint_statement.\n" +
-            "?constraint_statement pq:P2308 ?class.\n" +
-            "?constraint_statement ps:P2302 wd:Q21510865.\n" +
-            "?class wdt:" + propertiesForThisType + " ?value.\n" +
-            "?value wikibase:propertyType ?property.\n" +
-            "FILTER(NOT EXISTS {\n" +
-            "?value p:P2302 ?constraint.\n" +
-            "?constraint ps:P2302 wd:Q21502410.\n" +
-            "})\n" +
-            "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem))\n" +
+            "wd:" + this.currentFilter.value + " p:" + propertyConstraint + " ?constraint_statement .\n" +
+            "?constraint_statement pq:" + classProperty + " ?class .\n" +
+            "?constraint_statement ps:" + propertyConstraint +" wd:" + valueTypeConstraint + " .\n" +
+            "?class wdt:" + propertiesForThisType + " ?value .\n" +
+            "?value wikibase:propertyType ?property .\n";
+        if (propertyConstraint && distinctValuesConstraint) {
+            sparqlQuery += "FILTER(NOT EXISTS {\n" +
+                "?value p:" + propertyConstraint + " ?constraint .\n" +
+                "?constraint ps:" + propertyConstraint + " wd:" + distinctValuesConstraint + " .\n" +
+                "})\n";
+        }
+        sparqlQuery += "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem))\n" +
             "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
             "}" +
             "ORDER BY ?classLabel ?valueLabel";
