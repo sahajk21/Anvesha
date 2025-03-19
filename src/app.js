@@ -119,7 +119,12 @@ axios
           urlParams = new URLSearchParams("");
           urlParams.set("c", classValue);
           this.clsValue = classValue;
-          this.setClassSelectorSPARQL(classValue);
+          if ( noClasses ) {
+            this.forceAllItemsRerender();
+          } else {
+            urlParams.set("c", classValue);
+            this.allItemscomponentKey = 0;
+          }
           this.classLabel = classLabel;
           this.currentFilterLabel = "";
           this.currentFilterValue = "";
@@ -854,22 +859,22 @@ axios
             if (urlParams.has("format")) {
               this.format = urlParams.get("format");
             }
-            if (!urlParams.has("c") && !urlParams.has("view")) {
+            if (!noClasses && !urlParams.has("c") && !urlParams.has("view")) {
               return "class-filter";
             } else if (
-              urlParams.has("c") &&
+              (noClasses || urlParams.has("c")) &&
               !urlParams.has("cf") &&
               !urlParams.has("view")
             ) {
               return "view-all-items";
             } else if (
-              urlParams.has("c") &&
+              (noClasses || urlParams.has("c")) &&
               urlParams.has("cf") &&
               urlParams.has("sf")
             ) {
               return "secondary-filter-values";
             } else if (
-              urlParams.has("c") &&
+              (noClasses || urlParams.has("c")) &&
               urlParams.has("cf") &&
               !urlParams.has("view")
             ) {
@@ -894,6 +899,9 @@ axios
           return this.page;
         },
         classValue: function () {
+          if ( noClasses ) {
+            return null;
+          }
           if (this.clsValue == "") {
             value = urlParams.has("c") ? urlParams.get("c") : "";
           } else {
@@ -1308,6 +1316,16 @@ axios
           return this.appQuantities;
         },
         totalValues: function () {
+          if ( noClasses ) {
+            classSelector = '';
+          } else {
+            classSelector = "{\n" +
+              "    ?value wdt:" + instanceOf + " wd:" + this.classValue + "\n" +
+              "} UNION {\n" +
+              "    ?value wdt:" + instanceOf + " ?subclass .\n" +
+              "    ?subclass wdt:" + subclassOf + " wd:" + this.classValue + "\n" +
+              "}\n";
+          }
           var filterString = "";
           var noValueString = "";
           for (let i = 0; i < this.appliedFilters.length; i++) {
@@ -1509,7 +1527,7 @@ axios
           }
           sparqlQuery =
             "SELECT (COUNT(DISTINCT ?value) AS ?count) WHERE {\n" +
-            this.classSelector +
+            classSelector +
             filterString +
             filterRanges +
             filterQuantities +
