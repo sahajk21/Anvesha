@@ -323,12 +323,14 @@ viewallitems = Vue.component('view-all-items', {
             // Check available filters and exclude ones with distinct type value constraint.
             var sparqlQuery = "SELECT DISTINCT ?value ?valueLabel ?property WHERE {\n" +
                 "wd:" + this.classValue + " wdt:" + propertiesForThisType + " ?value.\n" +
-                "?value wikibase:propertyType ?property.\n" +
-                "FILTER(NOT EXISTS {\n" +
-                "?value p:P2302 ?constraint_statement.\n" +
-                "?constraint_statement ps:P2302 wd:Q21502410.\n" +
-                "})\n" +
-                "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem, wikibase:String))  \n" +
+                "?value wikibase:propertyType ?property.\n";
+            if ( propertyConstraint && distinctValuesConstraint ) {
+                sparqlQuery += "FILTER(NOT EXISTS {\n" +
+                "?value p:" + propertyConstraint + " ?constraint_statement.\n" +
+                "?constraint_statement ps:" + propertyConstraint + " wd:" + distinctValuesConstraint + ".\n" +
+                "})\n";
+            }
+            sparqlQuery += "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem, wikibase:String)) .\n" +
                 "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
                 "}\n" +
                 "ORDER BY ?valueLabel";
