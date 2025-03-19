@@ -414,9 +414,13 @@ viewallitems = Vue.component('view-all-items', {
                 filterRanges += "{#date range " + i + "\n?value (p:" + this.appliedRanges[i].filterValue + "/psv:" + this.appliedRanges[i].filterValue + ") ?timenode" + i + ".\n" +
                     "?timenode" + i + " wikibase:timeValue ?time" + i + ".\n" +
                     "?timenode" + i + " wikibase:timePrecision ?timeprecision" + i + ".\n" +
-                    "FILTER(?timeprecision" + i + ">=" + timePrecision + ")\n}";
-                constraintString += "FILTER('" + this.appliedRanges[i].valueLL + "'^^xsd:dateTime <= ?tim" + i + " && ?tim" + i + " < '" + this.appliedRanges[i].valueUL + "'^^xsd:dateTime).\n";
-                maxString += "(MAX(?time" + i + ") AS ?tim" + i + ") ";
+                    "FILTER(?timeprecision" + i + ">=" + timePrecision + ") .\n" +
+                    "FILTER('" + this.appliedRanges[i].valueLL + "'^^xsd:dateTime <= ?time" + i + " && ?time" + i + " < '" + this.appliedRanges[i].valueUL + "'^^xsd:dateTime). \n" +
+                    "}\n";
+                // It would probably be better to group by date here, but unfortunately that makes
+                // the queries too slow in some cases.
+                // constraintString += "FILTER('" + this.appliedRanges[i].valueLL + "'^^xsd:dateTime <= ?tim" + i + " && ?tim" + i + " < '" + this.appliedRanges[i].valueUL + "'^^xsd:dateTime).\n";
+                // maxString += "(MAX(?time" + i + ") AS ?tim" + i + ") ";
             }
         }
         let filterQuantities = "";
