@@ -310,18 +310,29 @@ viewallitems = Vue.component('view-all-items', {
         }
     },
     mounted() {
-        // Check available filters and exclude ones with distinct type value constraint.
-        var sparqlQuery = "SELECT DISTINCT ?value ?valueLabel ?property WHERE {\n" +
-            "wd:" + this.classValue + " wdt:" + propertiesForThisType + " ?value.\n" +
-            "?value wikibase:propertyType ?property.\n" +
-            "FILTER(NOT EXISTS {\n" +
-            "?value p:P2302 ?constraint_statement.\n" +
-            "?constraint_statement ps:P2302 wd:Q21502410.\n" +
-            "})\n" +
-            "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem, wikibase:String))  \n" +
-            "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
-            "}\n" +
-            "ORDER BY ?valueLabel";
+        if (classlessFilters) {
+            var classlessFiltersString = '';
+            for ( filterNum = 0; filterNum < classlessFilters.length; filterNum++ ) {
+                classlessFiltersString += 'wd:' + classlessFilters[filterNum] + ' ';
+            }
+            var sparqlQuery = "SELECT DISTINCT ?value ?valueLabel WHERE {\n" +
+                "VALUES ?value { " + classlessFiltersString + " }\n" +
+                "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
+                    "}";
+        } else {
+            // Check available filters and exclude ones with distinct type value constraint.
+            var sparqlQuery = "SELECT DISTINCT ?value ?valueLabel ?property WHERE {\n" +
+                "wd:" + this.classValue + " wdt:" + propertiesForThisType + " ?value.\n" +
+                "?value wikibase:propertyType ?property.\n" +
+                "FILTER(NOT EXISTS {\n" +
+                "?value p:P2302 ?constraint_statement.\n" +
+                "?constraint_statement ps:P2302 wd:Q21502410.\n" +
+                "})\n" +
+                "FILTER (?property in (wikibase:Time, wikibase:Quantity, wikibase:WikibaseItem, wikibase:String))  \n" +
+                "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
+                "}\n" +
+                "ORDER BY ?valueLabel";
+        }
         var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
         axios.get(fullUrl)
             .then(response => {
