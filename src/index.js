@@ -19,6 +19,8 @@ linksInTopNav = window.LINKS_IN_TOPNAV || {};
 itemURLStart = window.ITEM_URL_START || "https://www.wikidata.org/wiki/";
 showThumbnails = window.SHOW_THUMBNAILS || false;
 thumbnailURLStart = window.THUMBNAIL_URL_START;
+classlessFilters = window.CLASSLESS_FILTERS || null;
+noClasses = classlessFilters !== null;
 
 // Website name
 document.title = siteName
