@@ -337,13 +337,18 @@ viewallitems = Vue.component('view-all-items', {
             .catch(_error => {
                 this.items.push({ value: "Error" })
             })
-        // Find items both in this class and in any of its subclasses.
-        this.classSelector = "{\n" +
-            "    ?value wdt:" + instanceOf + " wd:" + this.classValue + "\n" +
-            "} UNION {\n" +
-            "    ?value wdt:" + instanceOf + " ?subclass .\n" +
-            "    ?subclass wdt:" + subclassOf + " wd:" + this.classValue + "\n" +
-            "}\n";
+
+        if ( noClasses ) {
+            this.classSelector = '';
+        } else {
+            // Find items both in this class and in any of its subclasses.
+            this.classSelector = "{\n" +
+                "    ?value wdt:" + instanceOf + " wd:" + this.classValue + "\n" +
+                "} UNION {\n" +
+                "    ?value wdt:" + instanceOf + " ?subclass .\n" +
+                "    ?subclass wdt:" + subclassOf + " wd:" + this.classValue + "\n" +
+                "}";
+        }
         if ( showThumbnails ) {
             this.classSelector += "?value schema:url ?file";
         }
