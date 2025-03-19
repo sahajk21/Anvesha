@@ -115,10 +115,14 @@ topnav = Vue.component('top-nav', {
             }
         },
         changePage(page) {
-            curLang = urlParams.get("lang")
+            curLang = urlParams.get("lang");
             urlParams = new URLSearchParams();
-            urlParams.set("lang", curLang)
-            this.$emit('change-page', page)
+            urlParams.set("lang", curLang);
+            if ( noClasses && page == 'class-filter' ) {
+                this.$emit('change-class', '');
+                return;
+            }
+            this.$emit('change-page', page);
         }
     }
 })
