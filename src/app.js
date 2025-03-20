@@ -1281,7 +1281,7 @@ axios
                       this.appQuantities[j].filterValueLabel = allData[i].propLabel.value;
                     }
                     if (this.appQuantities[j].parentFilterValue == propertyID) {
-                      this.appQuantities[j].parentFilterValueLabel = allData][i].propLabel.value;
+                      this.appQuantities[j].parentFilterValueLabel = allData[i].propLabel.value;
                     }
                   }
                 }
