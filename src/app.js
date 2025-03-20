@@ -1054,13 +1054,15 @@ axios
               var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl)
                   .then(response => {
-                      for (let i = 0; i < response.data['results']['bindings'].length; i++) {
+                      let allData = response.data['results']['bindings'];
+                      for (let i = 0; i < allData.length; i++) {
+                          let propertyID = allData[i].prop.value.split("/").slice(-1)[0];
                           for (let j = 0; j < this.appFilters.length; j++) {
-                              if (this.appFilters[j].filterValue == response.data['results']['bindings'][i].prop.value.split("/").slice(-1)[0]) {
-                                  this.appFilters[j].filterValueLabel = response.data['results']['bindings'][i].propLabel.value
+                              if (this.appFilters[j].filterValue == propertyID) {
+                                  this.appFilters[j].filterValueLabel = allData[i].propLabel.value
                               }
-                              if (this.appFilters[j].parentFilterValue == response.data['results']['bindings'][i].prop.value.split("/").slice(-1)[0]) {
-                                  this.appFilters[j].parentFilterValueLabel = response.data['results']['bindings'][i].propLabel.value
+                              if (this.appFilters[j].parentFilterValue == propertyID) {
+                                  this.appFilters[j].parentFilterValueLabel = allData[i].propLabel.value
                               }
                           }
                       }
@@ -1074,11 +1076,12 @@ axios
                   var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
                   axios.get(fullUrl)
                       .then(response => {
-                          for (let i = 0; i < response.data['results']['bindings'].length; i++) {
-                              index = this.appFilters.findIndex(filter => filter.value == response.data['results']['bindings'][i].value.value.split("/").slice(-1)[0]);
+                          let allData = response.data['results']['bindings'];
+                          for (let i = 0; i < allData.length; i++) {
+                              index = this.appFilters.findIndex(filter => filter.value == allData[i].value.value.split("/").slice(-1)[0]);
                               if (index != -1) {
-                                  this.appFilters[index].valueLabel = response.data['results']['bindings'][i].valueLabel.value
-                                  this.appFilters[index].valueLink = response.data['results']['bindings'][i].value.value
+                                  this.appFilters[index].valueLabel = allData[i].valueLabel.value
+                                  this.appFilters[index].valueLink = allData[i].value.value
                               }
                           }
                       })
@@ -1159,29 +1162,15 @@ axios
                 "}";
               var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl).then((response) => {
-                for (
-                  let i = 0;
-                  i < response.data["results"]["bindings"].length;
-                  i++
-                ) {
+                let allData = response.data["results"]["bindings"];
+                for (let i = 0; i < allData.length; i++) {
+                  let propertyID = allData[i].prop.value.split("/").slice(-1)[0];
                   for (let j = 0; j < this.appRanges.length; j++) {
-                    if (
-                      this.appRanges[j].filterValue ==
-                      response.data["results"]["bindings"][i].prop.value
-                        .split("/")
-                        .slice(-1)[0]
-                    ) {
-                      this.appRanges[j].filterValueLabel =
-                        response.data["results"]["bindings"][i].propLabel.value;
+                    if (this.appRanges[j].filterValue == propertyID) {
+                      this.appRanges[j].filterValueLabel = allData[i].propLabel.value;
                     }
-                    if (
-                      this.appRanges[j].parentFilterValue ==
-                      response.data["results"]["bindings"][i].prop.value
-                        .split("/")
-                        .slice(-1)[0]
-                    ) {
-                      this.appRanges[j].parentFilterValueLabel =
-                        response.data["results"]["bindings"][i].propLabel.value;
+                    if (this.appRanges[j].parentFilterValue == propertyID) {
+                      this.appRanges[j].parentFilterValueLabel = allData[i].propLabel.value;
                     }
                   }
                 }
@@ -1284,29 +1273,15 @@ axios
                 "}";
               var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl).then((response) => {
-                for (
-                  let i = 0;
-                  i < response.data["results"]["bindings"].length;
-                  i++
-                ) {
+                let allData = response.data["results"]["bindings"];
+                for (let i = 0; i < allData.length; i++) {
                   for (let j = 0; j < this.appQuantities.length; j++) {
-                    if (
-                      this.appQuantities[j].filterValue ==
-                      response.data["results"]["bindings"][i].prop.value
-                        .split("/")
-                        .slice(-1)[0]
-                    ) {
-                      this.appQuantities[j].filterValueLabel =
-                        response.data["results"]["bindings"][i].propLabel.value;
+                    let propertyID = allData[i].prop.value.split("/").slice(-1)[0];
+                    if (this.appQuantities[j].filterValue == propertyID) {
+                      this.appQuantities[j].filterValueLabel = allData[i].propLabel.value;
                     }
-                    if (
-                      this.appQuantities[j].parentFilterValue ==
-                      response.data["results"]["bindings"][i].prop.value
-                        .split("/")
-                        .slice(-1)[0]
-                    ) {
-                      this.appQuantities[j].parentFilterValueLabel =
-                        response.data["results"]["bindings"][i].propLabel.value;
+                    if (this.appQuantities[j].parentFilterValue == propertyID) {
+                      this.appQuantities[j].parentFilterValueLabel = allData][i].propLabel.value;
                     }
                   }
                 }
