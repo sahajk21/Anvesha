@@ -25,6 +25,7 @@ showThumbnails = window.SHOW_THUMBNAILS || false;
 thumbnailURLStart = window.THUMBNAIL_URL_START;
 classlessFilters = window.CLASSLESS_FILTERS || null;
 noClasses = classlessFilters !== null;
+wikidataMonthIDs = [ 'Q108', 'Q109', 'Q110', 'Q118', 'Q119', 'Q120', 'Q121', 'Q122', 'Q123', 'Q124', 'Q125', 'Q126' ];
 
 // Website name
 document.title = siteName
@@ -244,30 +245,8 @@ function generateFilterValuesFromNumbers(numberArray, unit = '') {
     return propertyValues;
 }
 function monthNumberToString(monthNum) {
-    if (monthNum == 1) {
-        return 'January';
-    } else if (monthNum == 2) {
-        return 'February';
-    } else if (monthNum == 3) {
-        return 'March';
-    } else if (monthNum == 4) {
-        return 'April';
-    } else if (monthNum == 5) {
-        return 'May';
-    } else if (monthNum == 6) {
-        return 'June';
-    } else if (monthNum == 7) {
-        return 'July';
-    } else if (monthNum == 8) {
-        return 'August';
-    } else if (monthNum == 9) {
-        return 'September';
-    } else if (monthNum == 10) {
-        return 'October';
-    } else if (monthNum == 11) {
-        return 'November';
-    } else if (monthNum == 12) {
-        return 'December';
+    if (monthNum >= 1 && monthNum <= 12) {
+        return wikidataMonthIDs[monthNum - 1];
     }
     return 'Invalid month - ' + monthNum;
 }
