@@ -1174,6 +1174,30 @@ axios
                     }
                   }
                 }
+
+                // Now that we have the date range values, get all the month names from
+                // Wikidata for the current language, in case there are any months that
+                // need to be specified.
+                monthIDs = '';
+                for (let i = 0; i < wikidataMonthIDs.length; i++) {
+                  monthIDs += " wd:" + wikidataMonthIDs[i];
+                }
+                sparqlQuery =
+                  "SELECT ?value ?valueLabel WHERE {\n" +
+                  "  VALUES ?value {  " + monthIDs + " }\n" +
+                  '  SERVICE wikibase:label { bd:serviceParam wikibase:language "' + lang + '". }\n' +
+                  "}";
+                var wikidataSPARQLEndpoint = 'https://query.wikidata.org/sparql?query=';
+                fullUrl = wikidataSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+                axios.get(fullUrl).then((response) => {
+                  let allData = response.data["results"]["bindings"];
+                  for (let monthNum = 0; monthNum < allData.length ; monthNum++) {
+                    let monthLabel = allData[monthNum].valueLabel.value;
+                    for (let j = 0; j < this.appRanges.length; j++) {
+                        this.appRanges[j].valueLabel = this.appRanges[j].valueLabel.replace(wikidataMonthIDs[monthNum], monthLabel);
+                    }
+                  }
+                });
               });
             }
           }
