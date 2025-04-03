@@ -15,6 +15,8 @@
 	"noItems": "沒有符合此描述的項目。",
 	"displayItemsError": "嘗試顯示出的項目清單花費了太多時間，請考慮添加更多篩選。",
 	"gettingValues": "正在取得用於篩選$1的值…",
+	"filterValuePlaceholder": "輸入篩選值",
+	"customFilterValue": "您也可以為此篩選選擇自訂值：",
 	"noAdditionalValues": "沒有用於篩選$1的額外值。",
 	"filterError": "嘗試取得用於篩選$1的值花費了太多時間。",
 	"filterTimeout": "（取得篩選$1的完整值集合花費了太多時間；反過來說，這或許是不完整的集合。）",
@@ -25,6 +27,7 @@
 	"specificClass": "更改成更具體的分類：",
 	"generalClass": "更改成更通用的分類：",
 	"viewList": "查看項目清單",
+	"backToMain": "返回首頁",
 	"results": "({{PLURAL:$1|1 筆結果|$1 筆結果}})",
 	"applyLinkedFilter": "在$1套用篩選",
 	"chooseLinkedFilter": "從以下類別挑選出一個篩選："
