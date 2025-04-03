@@ -714,6 +714,29 @@ filtervalues = Vue.component('filter-values', {
                                     vm.itemsType = 'Time';
                                     vm.displayCount = 1;
                                     cachedFilterValues[queryString] = {items: vm.items, itemsType: "Time"};
+
+                                    // Get the month names from Wikidata for the current language, and
+                                    // replace them into the date bucket names as needed.
+                                    monthIDs = '';
+                                    for (let i = 0; i < wikidataMonthIDs.length; i++) {
+                                        monthIDs += " wd:" + wikidataMonthIDs[i];
+                                    }
+                                    sparqlQuery =
+                                        "SELECT ?value ?valueLabel WHERE {\n" +
+                                        "  VALUES ?value {  " + monthIDs + " }\n" +
+                                        '  SERVICE wikibase:label { bd:serviceParam wikibase:language "' + lang + '". }\n' +
+                                        "}";
+                                    var wikidataSPARQLEndpoint = 'https://query.wikidata.org/sparql?query=';
+                                    fullUrl = wikidataSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+                                    axios.get(fullUrl).then((response) => {
+                                        let allData = response.data["results"]["bindings"];
+                                        for (let monthNum = 0; monthNum < allData.length ; monthNum++) {
+                                            let monthLabel = allData[monthNum].valueLabel.value;
+                                            for (let j = 0; j < vm.items.length; j++) {
+                                                vm.items[j].bucketName = vm.items[j].bucketName.replace(wikidataMonthIDs[monthNum], monthLabel);
+                                            }
+                                        }
+                                    });
                                 }
                                 else {
                                     vm.itemsType = 'Additionalempty'
