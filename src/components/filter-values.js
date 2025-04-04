@@ -540,7 +540,7 @@ filtervalues = Vue.component('filter-values', {
             "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
             "}" +
             "ORDER BY ?classLabel ?valueLabel";
-        const url = sparqlEndpoint + encodeURIComponent(sparqlQuery);
+        const url = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
         axios.get(url)
             .then(response =>{
                 var filtersByClass = {};
@@ -579,8 +579,13 @@ filtervalues = Vue.component('filter-values', {
         var noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
-                filterString += "{#filter " + i +"\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n" +
-                    "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
+                if ( sparqlEndpoint == centralSPARQLEndpoint ) {
+                    filterString += "{#filter " + i +"\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n" +
+                        "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
+                } else {
+                    filterString += "{#filter " + i +"\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n}\n";
+                    parentFilterString += "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n";
+                }
             }
             else if (this.appliedFilters[i].value == "novalue") {
                 noValueString += "{#filter " + i +"\nFILTER(NOT EXISTS { ?value wdt:" + this.appliedFilters[i].filterValue + " ?no. }).\n}"
@@ -592,6 +597,9 @@ filtervalues = Vue.component('filter-values', {
             else {
                 filterString += "{#filter " + i +"\n?item wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
             }
+        }
+        if (parentFilterString != '' && centralSPARQLService) {
+             parentFilterString = "SERVICE <" + centralSPARQLService + "> {\n" + parentFilterString + "\n}\n";
         }
         var filterRanges = ""
         timeString = "?item wdt:" + this.currentFilter.value + " ?time.\n";
@@ -662,11 +670,23 @@ filtervalues = Vue.component('filter-values', {
                 }
             }
         }
+
+        if (centralSPARQLService) {
+            this.labelClause = "SERVICE <" + centralSPARQLService + "> {\n" +
+            "  SERVICE wikibase:label {\n" +
+            "    bd:serviceParam wikibase:language \"" + lang + "\".\n" +
+            "    ?value rdfs:label ?valueLabel\n" +
+            "  }\n" +
+            "}\n";
+        } else {
+            this.labelClause = "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n";
+        }
+
         // Get the property type for current filter
         sparqlQuery = "SELECT ?property WHERE {\n" +
             "  wd:" + this.currentFilter.value + " wikibase:propertyType ?property.\n" +
             "}";
-        var fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
+        var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
         var vm = this;
         axios.get(fullUrl)
             .then((response) => {
@@ -913,11 +933,21 @@ filtervalues = Vue.component('filter-values', {
                                      Since the unit of all quantities will be same
                                      just find the unit of first item.
                                     */
+                                    if (centralSPARQLService) {
+                                        quantityLabelClause = "SERVICE <" + centralSPARQLService + "> {\n" +
+                                        "  SERVICE wikibase:label {\n" +
+                                        "    bd:serviceParam wikibase:language \"" + lang + "\".\n" +
+                                        "    ?unit rdfs:label ?unitLabel\n" +
+                                        "  }\n" +
+                                        "}\n";
+                                    } else {
+                                        quantityLabelClause = "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n";
+                                    }
                                     var unitQuery = "SELECT ?unitLabel WHERE {\n" +
                                         "    wd:" + firstItem + " (p:" + vm.currentFilter.value + "/psn:" + vm.currentFilter.value + ") ?v.\n" +
                                         "    ?v wikibase:quantityAmount ?amount;\n" +
                                         "       wikibase:quantityUnit ?unit.\n" +
-                                        "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + ",[AUTO_LANGUAGE],en\". }\n" +
+                                        quantityLabelClause +
                                         "}";
                                     fullUrl = sparqlEndpoint + encodeURIComponent(unitQuery);
                                     axios.get(fullUrl)
@@ -1016,11 +1046,18 @@ filtervalues = Vue.component('filter-values', {
                         filterRanges +
                         filterQuantities +
                         noValueString +
-                        "}\n" +
+                        parentFilterString +
+                        "}\n";
+                    sparqlQuery +=
                         "GROUP BY ?value\n" +
-                        "}\n" +
-                        "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
-                        "}\n" +
+                        "ORDER BY DESC (?count)" +
+                        "LIMIT 1000\n" +
+                        "} AS %results\n" +
+                        "WHERE {\n" +
+                        "INCLUDE %results\n" +
+                        this.labelClause;
+
+                    sparqlQuery += "}\n" +
                         "ORDER BY DESC (?count)";
                     vm.query = queryServiceWebsiteURL + encodeURIComponent(sparqlQuery);
                     var fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
@@ -1100,7 +1137,7 @@ filtervalues = Vue.component('filter-values', {
                                 "}\n" +
                                 "\n" +
                                 "}\n" +
-                                "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
+                                this.labelClause +
                                 "}\n" +
                                 "ORDER BY ?valueLabel";
                             fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
