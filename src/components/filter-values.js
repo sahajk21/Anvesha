@@ -576,6 +576,7 @@ filtervalues = Vue.component('filter-values', {
 
         // Convert the applied filters/time ranges/quantities into SPARQL equivalents
         var filterString = "";
+        var parentFilterString = "";
         var noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
@@ -1036,9 +1037,9 @@ filtervalues = Vue.component('filter-values', {
                     parameters.delete("sf")
                     parameters.set("f." + vm.currentFilter.value, "novalue")
                     vm.noValueURL = window.location.pathname + "?" + parameters
-                    // Gets items and their count. 
-                    var sparqlQuery = "SELECT ?value ?valueLabel ?count WHERE {\n" +
-                        "{\n" +
+                    // Gets items and their count.
+                    var sparqlQuery = "SELECT ?value ?valueLabel ?count\n" +
+                        "WITH {\n" +
                         "SELECT ?value (COUNT(?value) AS ?count) WHERE {\n" +
                         this.classSelector +
                         "?item wdt:" + vm.currentFilter.value + " ?value.\n" +
@@ -1050,7 +1051,7 @@ filtervalues = Vue.component('filter-values', {
                         "}\n";
                     sparqlQuery +=
                         "GROUP BY ?value\n" +
-                        "ORDER BY DESC (?count)" +
+                        "ORDER BY DESC (?count)\n" +
                         "LIMIT 1000\n" +
                         "} AS %results\n" +
                         "WHERE {\n" +
