@@ -335,7 +335,7 @@ viewallitems = Vue.component('view-all-items', {
                 "}\n" +
                 "ORDER BY ?valueLabel";
         }
-        var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+        var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
         axios.get(fullUrl)
             .then(response => {
                 if (response.data['results']['bindings']) {
@@ -379,8 +379,15 @@ viewallitems = Vue.component('view-all-items', {
         let noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
-                filterString += "{#filter " + i + "\n?value wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n" +
-                    "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
+                if (centralSPARQLService) {
+                    filterString += "?value wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + " .\n";
+                    parentFilterString += "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + " .\n";
+                } else {
+                    filterString += "{#filter " + i + "\n" +
+                        "?value wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + " .\n" +
+                        "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n" +
+                        "}\n";
+                }
             }
             else if (this.appliedFilters[i].value == "novalue") {
                 noValueString += "{#filter " + i + "\n FILTER(NOT EXISTS { ?value wdt:" + this.appliedFilters[i].filterValue + " ?no. }).\n}"
@@ -393,6 +400,9 @@ viewallitems = Vue.component('view-all-items', {
                 filterString += "{#filter " + i + "\n?value wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
             }
         }
+        if (parentFilterString != '') {
+             filterString += "SERVICE <" + centralSPARQLService + "> {\n" + parentFilterString + "}\n";
+        }
         let filterRanges = "", maxString = "", constraintString = "";
         for (let i = 0; i < this.appliedRanges.length; i++) {
             if (this.appliedRanges[i].valueLL == "novalue") {
@@ -403,7 +413,8 @@ viewallitems = Vue.component('view-all-items', {
                 filterRanges += "{#date range " + i + "\n?value wdt:" + this.appliedRanges[i].parentFilterValue + " ?temp" + i + ".\n" +
                     "?temp" + i + " (p:" + this.appliedRanges[i].filterValue + "/psv:" + this.appliedRanges[i].filterValue + ") ?timenode" + i + ".\n" +
                     "?timenode" + i + " wikibase:timeValue ?time" + i + ".\n" +
-                    "?timenode" + i + " wikibase:timePrecision ?timeprecision" + i + ".\n" +
+                    "?timenode" + i + " wikibase:timePrecision ?timeprecision" + i + " .\n" +
+                    (centralSPARQLService ? "}\n" : '') +
                     "FILTER(?timeprecision" + i + ">=" + timePrecision + ")\n}";
                 constraintString += "FILTER('" + this.appliedRanges[i].valueLL + "'^^xsd:dateTime <= ?tim" + i + " && ?tim" + i + " < '" + this.appliedRanges[i].valueUL + "'^^xsd:dateTime).\n";
                 maxString += "(MAX(?time" + i + ") AS ?tim" + i + ") ";
@@ -431,15 +442,19 @@ viewallitems = Vue.component('view-all-items', {
                 }
                 else if (this.appliedQuantities[i].unit == "") {
                     filterQuantities += "{#quantity range " + i + "\n?value wdt:" + this.appliedQuantities[i].parentFilterValue + " ?temp" + i + ".\n" +
+                        (centralSPARQLService ? "SERVICE <" + centralSPARQLService + "> {\n" : '') +
                         "?temp" + i + " (p:" + this.appliedQuantities[i].filterValue + "/psv:" + this.appliedQuantities[i].filterValue + ") ?amount" + i + ".\n" +
-                        "  ?amount" + i + " wikibase:quantityAmount ?amountValue" + i + ".\n}";
+                        "  ?amount" + i + " wikibase:quantityAmount ?amountValue" + i + " .\n}" +
+                        (centralSPARQLService ? "}\n" : '');
                     constraintString += "FILTER(" + this.appliedQuantities[i].valueUL + " >= ?qua" + i + " && ?qua" + i + " >=" + this.appliedQuantities[i].valueLL + ")\n";
                     maxString += "(MAX(?amountValue" + i + ") AS ?qua" + i + ") ";
                 }
                 else {
-                    filterQuantities += "{#quantity range " + i + "\n?value wdt:" + this.appliedQuantities[i].parentFilterValue + " ?temp" + i + ".\n" +
+                    filterQuantities += "{#quantity range " + i + "\n?value wdt:" + this.appliedQuantities[i].parentFilterValue + " ?temp" + i + ".\n" ++
+                        (centralSPARQLService ? "SERVICE <" + centralSPARQLService + "> {\n" : '') +
                         "?temp" + i + " (p:" + this.appliedQuantities[i].filterValue + "/psn:" + this.appliedQuantities[i].filterValue + ") ?amount" + i + ".\n" +
-                        "  ?amount" + i + " wikibase:quantityAmount ?amountValue" + i + ".\n}";
+                        "  ?amount" + i + " wikibase:quantityAmount ?amountValue" + i + ".\n}" +
+                        (centralSPARQLService ? "}\n" : '');
                     constraintString += "FILTER(" + this.appliedQuantities[i].valueUL + " >= ?qua" + i + " && ?qua" + i + " >=" + this.appliedQuantities[i].valueLL + ")\n";
                     maxString += "(MAX(?amountValue" + i + ") AS ?qua" + i + ") ";
                 }
