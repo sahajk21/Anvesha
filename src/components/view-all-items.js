@@ -376,6 +376,7 @@ viewallitems = Vue.component('view-all-items', {
 
         // Change applied filters/ranges/quantities to SPARQL equivalents
         let filterString = "";
+        let parentFilterString = "";
         let noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
@@ -450,7 +451,7 @@ viewallitems = Vue.component('view-all-items', {
                     maxString += "(MAX(?amountValue" + i + ") AS ?qua" + i + ") ";
                 }
                 else {
-                    filterQuantities += "{#quantity range " + i + "\n?value wdt:" + this.appliedQuantities[i].parentFilterValue + " ?temp" + i + ".\n" ++
+                    filterQuantities += "{#quantity range " + i + "\n?value wdt:" + this.appliedQuantities[i].parentFilterValue + " ?temp" + i + ".\n" +
                         (centralSPARQLService ? "SERVICE <" + centralSPARQLService + "> {\n" : '') +
                         "?temp" + i + " (p:" + this.appliedQuantities[i].filterValue + "/psn:" + this.appliedQuantities[i].filterValue + ") ?amount" + i + ".\n" +
                         "  ?amount" + i + " wikibase:quantityAmount ?amountValue" + i + ".\n}" +
