@@ -393,6 +393,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
 
         // Convert the applied filters/time ranges/quantities into SPARQL equivalents
         var filterString = "";
+        var parentFilterString = "";
         var noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
@@ -635,7 +636,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
                                     filterString +
                                     "{ # Current filter\n?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
                                     (centralSPARQLService ? '' : "SERVICE <" + centralSPARQLService + "> {\n") +
-                                    "?temp (p:" + vm.secondaryFilter.value + "/psv:" + vm.secondaryFilter.value + ") ?v.\n" ++
+                                    "?temp (p:" + vm.secondaryFilter.value + "/psv:" + vm.secondaryFilter.value + ") ?v.\n" +
                                     "?v wikibase:quantityAmount ?amount.\n" +
                                     (centralSPARQLService ? '' : "}\n") +
                                     "}\n" +
