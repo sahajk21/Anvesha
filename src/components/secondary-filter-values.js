@@ -396,8 +396,13 @@ secondayFilterValues = Vue.component('secondary-filters', {
         var noValueString = "";
         for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
-                filterString += "{#filter " + i + "\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n" +
-                    "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
+                if (centralSPARQLService) {
+                    filterString += "{#filter " + i + "\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n" +
+                        "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n}";
+                } else {
+                    filterString += "{#filter " + i + "\n?item wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp" + i + ".\n}\n";
+                    parentFilterString += "?temp" + i + " wdt:" + this.appliedFilters[i].filterValue + " wd:" + this.appliedFilters[i].value + ".\n";
+                }
             }
             else if (this.appliedFilters[i].value == "novalue") {
                 noValueString += "{#filter " + i +"\n FILTER(NOT EXISTS { ?value wdt:" + this.appliedFilters[i].filterValue + " ?no. }).\n}"
@@ -438,6 +443,13 @@ secondayFilterValues = Vue.component('secondary-filters', {
                     "  FILTER(?timeprecision>=" + timePrecision + ")\n}";
             }
         }
+
+        if (centralSPARQLService) {
+            timeString = "SERVICE <" + centralSPARQLService + "> {\n" +
+                timeString +
+                "\n}\n";
+        }
+
         var filterQuantities = "";
         for (let i = 0; i < this.appliedQuantities.length; i++) {
             if (this.appliedQuantities[i].parentFilterValue) {
@@ -477,7 +489,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
         sparqlQuery = "SELECT ?property WHERE {\n" +
             "  wd:" + this.secondaryFilter.value + " wikibase:propertyType ?property.\n" +
             "}";
-        var fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
+        var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
         var vm = this;
         axios.get(fullUrl)
             .then((response) => {
@@ -621,9 +633,12 @@ secondayFilterValues = Vue.component('secondary-filters', {
                                     sparqlQuery = "SELECT ?amount WHERE {\n" +
                                     vm.classSelector +
                                     filterString +
-                                    "{#Current filter\n?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
-                                    "?temp (p:" + vm.secondaryFilter.value + "/psv:" + vm.secondaryFilter.value + ") ?v.\n" +
-                                    "?v wikibase:quantityAmount ?amount.\n}" +
+                                    "{ # Current filter\n?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
+                                    (centralSPARQLService ? '' : "SERVICE <" + centralSPARQLService + "> {\n") +
+                                    "?temp (p:" + vm.secondaryFilter.value + "/psv:" + vm.secondaryFilter.value + ") ?v.\n" ++
+                                    "?v wikibase:quantityAmount ?amount.\n" +
+                                    (centralSPARQLService ? '' : "}\n") +
+                                    "}\n" +
                                     filterRanges +
                                     filterQuantities +
                                     noValueString +
@@ -784,23 +799,45 @@ secondayFilterValues = Vue.component('secondary-filters', {
                     parameters = new URLSearchParams(q)
                     parameters.set("f." + vm.currentFilter.value + "." + vm.secondaryFilter.value, "novalue")
                     vm.noValueURL = window.location.pathname + "?" + parameters
-                    // Gets items and their count. 
-                    var sparqlQuery = "SELECT ?value ?valueLabel ?count WHERE {\n" +
-                        "{\n" +
-                        "SELECT ?value (COUNT(?value) AS ?count) WHERE {\n" +
+                    // Gets items and their count.
+                    if (centralSPARQLService) {
+                        labelClause = "SERVICE <" + centralSPARQLService + "> {\n" +
+                            "  SERVICE wikibase:label {\n" +
+                            "    bd:serviceParam wikibase:language \"" + lang + "\".\n" +
+                            "    ?value rdfs:label ?valueLabel\n" +
+                            "  }\n";
+                        parentFilterString = "SERVICE <" + centralSPARQLService + "> {\n" +
+                            parentFilterString +
+                            "\n}\n";
+                    } else {
+                        labelClause = "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n";
+                    }
+
+                    var sparqlQuery = "SELECT ?value ?valueLabel ?count\n" +
+                        "WITH {\n" +
+                        "SELECT ?temp (count(?temp) as ?tempCount) WHERE {\n" +
                         vm.classSelector +
-                        "{\n?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
-                        "?temp wdt:" + vm.secondaryFilter.value + " ?value.\n}" +
+                        "?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
                         filterString +
                         filterRanges +
                         filterQuantities +
                         noValueString +
-                        "\n}\n" +
+                        "\n} GROUP BY ?temp\n" +
+                        "} AS %local\n" +
+                        "WHERE {\n" +
+                        "{\n" +
+                        "SELECT ?value (sum(?tempCount) as ?count) WHERE {\n" +
+                        "INCLUDE %local\n" +
+                        parentFilterString +
+                        "}\n" +
                         "GROUP BY ?value\n" +
+                        "ORDER BY DESC (?count)\n" +
+                        "LIMIT 1000\n" +
                         "}\n" +
-                        "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
+                        labelClause +
                         "}\n" +
-                        "ORDER BY DESC (?count)";
+                        "}\n" +
+                        "ORDER BY DESC (?count)\n";
                     vm.query = queryServiceWebsiteURL + encodeURIComponent(sparqlQuery);
                     var fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
                     axios.get(fullUrl)
@@ -854,6 +891,25 @@ secondayFilterValues = Vue.component('secondary-filters', {
                                 Gets fallback results in case the primary query fails or times out.
                                 Finds random 300 values.
                             */
+                            if (veryLargeClasses.includes(this.classValue) && this.appliedFilters.length == 0 && this.appliedRanges.length == 0 && this.appliedQuantities.length == 0) {
+                                offset = Math.floor(Math.random() * (fallbackQueryLimit * 30));
+                            } else {
+                                offset = 0;
+                            }
+
+                            if (centralSPARQLService) {
+                                labelClause = "SERVICE <" + centralSPARQLService + "> {\n" +
+                                   "  SERVICE wikibase:label {\n" +
+                                   "    bd:serviceParam wikibase:language \"" + lang + "\".\n" +
+                                   "    ?value rdfs:label ?valueLabel\n" +
+                                   "  }\n";
+                                  parentFilterString = "SERVICE <" + centralSPARQLService + "> {\n" +
+                                      parentFilterString +
+                                      "\n}\n";
+                            } else {
+                                labelClause = "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n";
+                            }
+
                             sparqlQuery = "SELECT ?value ?valueLabel WHERE {\n" +
                                 "  {\n" +
                                 "    SELECT DISTINCT ?value WHERE {\n" +
@@ -865,11 +921,14 @@ secondayFilterValues = Vue.component('secondary-filters', {
                                 filterString +
                                 filterRanges +
                                 filterQuantities +
+                                parentFilterString +
                                 "      }\n" +
-                                "      LIMIT 300\n" +
+                                "      OFFSET " + offset + "\n" +
+                                "      LIMIT " + fallbackQueryLimit + "\n" +
                                 "    }\n" +
                                 "  }\n" +
-                                "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
+                                labelClause +
+                                " }\n" +
                                 "}\n" +
                                 "ORDER BY (?valueLabel)";
                             fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
