@@ -917,7 +917,7 @@ axios
               lang +
               '". }\n' +
               "}";
-            const fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+            const fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
             axios.get(fullUrl).then((response) => {
               str = response.data["results"]["bindings"][0].valueLabel.value;
               this.classLabel = str.replace(/^./, str[0].toUpperCase());
@@ -940,7 +940,7 @@ axios
             lang +
             '". }\n' +
             "}";
-          const fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+          const fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
           axios
             .get(fullUrl)
             .then(
@@ -965,7 +965,7 @@ axios
             lang +
             '". }\n' +
             "}";
-          const fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+          const fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
           axios
             .get(fullUrl)
             .then(
@@ -1051,7 +1051,7 @@ axios
                   "  ?prop wikibase:directClaim ?p.\n" +
                   "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
                   "}";
-              var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+              var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl)
                   .then(response => {
                       let allData = response.data['results']['bindings'];
@@ -1073,7 +1073,7 @@ axios
                       "  VALUES ?value {  " + values + " }\n" +
                       "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". } \n" +
                       "}";
-                  var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+                  var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
                   axios.get(fullUrl)
                       .then(response => {
                           let allData = response.data['results']['bindings'];
@@ -1160,7 +1160,7 @@ axios
                 lang +
                 '". }\n' +
                 "}";
-              var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+              var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl).then((response) => {
                 let allData = response.data["results"]["bindings"];
                 for (let i = 0; i < allData.length; i++) {
@@ -1295,7 +1295,7 @@ axios
                 lang +
                 '". }\n' +
                 "}";
-              var fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+              var fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
               axios.get(fullUrl).then((response) => {
                 let allData = response.data["results"]["bindings"];
                 for (let i = 0; i < allData.length; i++) {
@@ -1330,14 +1330,11 @@ axios
           for (let i = 0; i < this.appliedFilters.length; i++) {
             if (this.appliedFilters[i].parentFilterValue) {
               filterString +=
-                "?value wdt:" +
-                this.appliedFilters[i].parentFilterValue +
-                " ?temp.\n" +
-                "?temp wdt:" +
-                this.appliedFilters[i].filterValue +
-                " wd:" +
-                this.appliedFilters[i].value +
-                ".\n";
+                "?value wdt:" + this.appliedFilters[i].parentFilterValue + " ?temp .\n" +
+                (centralSPARQLService ? "SERVICE <" + centralSPARQLService + "> {\n" : '') +
+                "?temp wdt:" + this.appliedFilters[i].filterValue +
+                " wd:" + this.appliedFilters[i].value +
+                (centralSPARQLService ? "\n}" : ' .') + "\n";
             } else if (this.appliedFilters[i].value == "novalue") {
               noValueString +=
                 " FILTER(NOT EXISTS { ?value wdt:" +

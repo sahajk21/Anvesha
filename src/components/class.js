@@ -78,7 +78,7 @@ classfilter = Vue.component('class-filter', {
                 "  VALUES ?value { " + suggestedClasses + " }\n" +
                 "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
                 "}";
-            const fullUrl = labelsSPARQLEndpoint + encodeURIComponent(sparqlQuery);
+            const fullUrl = centralSPARQLEndpoint + encodeURIComponent(sparqlQuery);
             axios.get(fullUrl)
                 .then(response => {
                     for (let i = 0; i < response.data['results']['bindings'].length; i++) {
