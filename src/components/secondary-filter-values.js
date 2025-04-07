@@ -806,7 +806,8 @@ secondayFilterValues = Vue.component('secondary-filters', {
                             "  SERVICE wikibase:label {\n" +
                             "    bd:serviceParam wikibase:language \"" + lang + "\".\n" +
                             "    ?value rdfs:label ?valueLabel\n" +
-                            "  }\n";
+                            "  }\n" +
+                            "}\n";
                         parentFilterString = "SERVICE <" + centralSPARQLService + "> {\n" +
                             parentFilterString +
                             "\n}\n";
@@ -814,22 +815,35 @@ secondayFilterValues = Vue.component('secondary-filters', {
                         labelClause = "  SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n";
                     }
 
-                    var sparqlQuery = "SELECT ?value ?valueLabel ?count\n" +
-                        "WITH {\n" +
-                        "SELECT ?temp (count(?temp) as ?tempCount) WHERE {\n" +
-                        vm.classSelector +
-                        "?item wdt:" + vm.currentFilter.value + " ?temp.\n" +
+                    var sparqlQuery = "SELECT ?value ?valueLabel ?count\n";
+
+                    if (centralSPARQLService) {
+                        sparqlQuery += "WITH {\n" +
+                            "SELECT ?temp (count(?temp) as ?tempCount) WHERE {\n";
+                    } else {
+                        sparqlQuery += "WHERE {\n" +
+                            "{\n" +
+                            "SELECT ?value (COUNT(?value) AS ?count) WHERE {\n";
+                    }
+
+                    sparqlQuery += vm.classSelector +
+                        "{\n?item wdt:" + vm.currentFilter.value + " ?temp .\n" +
+                        "?temp wdt:" + vm.secondaryFilter.value + " ?value\n}\n" +
                         filterString +
                         filterRanges +
                         filterQuantities +
-                        noValueString +
-                        "\n} GROUP BY ?temp\n" +
-                        "} AS %local\n" +
-                        "WHERE {\n" +
-                        "{\n" +
-                        "SELECT ?value (sum(?tempCount) as ?count) WHERE {\n" +
-                        "INCLUDE %local\n" +
-                        parentFilterString +
+                        noValueString;
+
+                    if (centralSPARQLService) {
+                        sparqlQuery += "\n} GROUP BY ?temp\n" +
+                            "} AS %local\n" +
+                            "WHERE {\n" +
+                            "{\n" +
+                            "SELECT ?value (sum(?tempCount) as ?count) WHERE {\n" +
+                            "INCLUDE %local\n";
+                    }
+
+                    sparqlQuery += parentFilterString +
                         "}\n" +
                         "GROUP BY ?value\n" +
                         "ORDER BY DESC (?count)\n" +
@@ -837,8 +851,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
                         "}\n" +
                         labelClause +
                         "}\n" +
-                        "}\n" +
-                        "ORDER BY DESC (?count)\n";
+                        "ORDER BY DESC (?count)";
                     vm.query = queryServiceWebsiteURL + encodeURIComponent(sparqlQuery);
                     var fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
                     axios.get(fullUrl)
