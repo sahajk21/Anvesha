@@ -7,6 +7,7 @@ logo = window.LOGO || "images/logo.png";
 mainPageText = window.MAIN_PAGE_TEXT || null;
 classes = window.SUGGESTED_CLASSES.map(function(v){return {value:v}}) || [];
 veryLargeClasses = window.VERY_LARGE_CLASSES || [];
+unknowablyLargeClasses = window.UNKNOWABLY_LARGE_CLASSES || [];
 sparqlEndpoint = window.SPARQL_ENDPOINT || "https://query.wikidata.org/sparql?query=";
 centralSPARQLService = window.CENTRAL_SPARQL_SERVICE || null;
 centralSPARQLEndpoint = centralSPARQLService ? centralSPARQLService + '?query=' : sparqlEndpoint;

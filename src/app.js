@@ -1315,6 +1315,9 @@ axios
           return this.appQuantities;
         },
         totalValues: function () {
+          if ( unknowablyLargeClasses.includes(this.classValue) && this.appliedFilters.length == 0 && this.appliedRanges.length == 0 && this.appliedQuantities.length == 0 ) {
+              return undefined;
+          }
           if ( noClasses ) {
             classSelector = '';
           } else {
