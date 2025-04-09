@@ -2,7 +2,7 @@ headerView = Vue.component('header-view',{
     props: ['classLabel', 'appliedFilters', 'appliedRanges', 'appliedQuantities'],
     template:`
         <div class="header">
-            <p class="heading"> 
+            <p v-if="classLabel" class="heading"> 
                 {{ classLabel }} 
                 <a 
                     title="superclass" 
