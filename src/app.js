@@ -117,7 +117,6 @@ axios
         },
         updateClassValue: function (classValue, classLabel = "") {
           urlParams = new URLSearchParams("");
-          urlParams.set("c", classValue);
           this.clsValue = classValue;
           if ( noClasses ) {
             this.forceAllItemsRerender();
@@ -131,7 +130,6 @@ axios
           this.appFilters = [];
           this.appRanges = [];
           this.appQuantities = [];
-          this.allItemscomponentKey = 0;
           this.filterscomponentKey = 0;
           this.totalValues = "";
           this.updatePage("view-all-items");
