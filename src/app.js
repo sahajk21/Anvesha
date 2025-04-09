@@ -175,14 +175,18 @@ axios
                         existingValues = existingValues + this.appFilters[i].value + "-";
                     }
                 }
+                var actualValue = filter.value.value;
+                if (filter.value.type != 'literal') {
+                    actualValue = actualValue.split('/').slice(-1)[0];
+                }
                 this.appFilters.push({
                     filterValue: this.currentFilter.value,
                     filterValueLabel: this.currentFilter.valueLabel,
-                    value: filter.value.value.split('/').slice(-1)[0],
+                    value: actualValue,
                     valueLabel: filter.valueLabel.value,
                     valueLink: filter.value.value
                 });
-                urlParams.set("f." + this.currentFilter.value, existingValues + filter.value.value.split('/').slice(-1)[0])
+                urlParams.set("f." + this.currentFilter.value, existingValues + actualValue);
             }
           urlParams.delete("cf");
           urlParams.delete("sf");
