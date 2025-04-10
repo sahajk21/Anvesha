@@ -131,13 +131,19 @@ viewallitems = Vue.component('view-all-items', {
              at a time based on the current page number.
              Sort only in case of single page results.
             */
+            var filterString = this.sparqlParameters[0];
+            var filterRanges = this.sparqlParameters[1];
+            var filterQuantities = this.sparqlParameters[2];
+            var noValueString = this.sparqlParameters[3];
+            var maxString = this.sparqlParameters[4];
+            var constraintString = this.sparqlParameters[5];
             var outerFileVar = '';
             var innerFileVar = '';
             if ( showThumbnails ) {
                 outerFileVar = '?file';
                 // These two variables depend on whether there's a "GROUP BY".
-                innerFileVar = this.sparqlParameters[4] == "" ? "?file" : "(MAX(?fil) AS ?file)";
-                this.classSelector = this.sparqlParameters[4] == "" ? "?value schema:url ?file" : "?value schema:url $fil";
+                innerFileVar = maxString == "" ? "?file" : "(MAX(?fil) AS ?file)";
+                this.classSelector = maxString == "" ? "?value schema:url ?file" : "?value schema:url $fil";
             }
 
             var offset = (this.currentPage - 1) * resultsPerPage;
@@ -157,20 +163,20 @@ viewallitems = Vue.component('view-all-items', {
             }
             sparqlQuery = "SELECT DISTINCT ?value ?valueLabel " + outerFileVar + " WHERE {\n" +
                 "{\n" +
-                "SELECT ?value " + innerFileVar + " " + this.sparqlParameters[4] + " WHERE {\n" +
+                "SELECT ?value " + innerFileVar + " " + maxString + " WHERE {\n" +
                 this.classSelector +
-                this.sparqlParameters[0] +
-                this.sparqlParameters[1] +
-                this.sparqlParameters[2] +
-                this.sparqlParameters[3] +
+                filterString +
+                filterRanges +
+                filterQuantities +
+                noValueString +
                 "}\n" +
-                (this.sparqlParameters[4] == "" ? "" : "GROUP BY ?value \n") +
-                (this.sparqlParameters[5] == "" ? "LIMIT " + resultsPerPage + " OFFSET " + offset : "") +
+                (maxString == "" ? "" : "GROUP BY ?value \n") +
+                (constraintString == "" ? "LIMIT " + resultsPerPage + " OFFSET " + offset : "") +
                 "}\n" +
-                this.sparqlParameters[5] +
+                constraintString +
                 "SERVICE wikibase:label { bd:serviceParam wikibase:language \"" + lang + "\". }\n" +
                 "}\n" +
-                (this.sparqlParameters[5] != "" ? "LIMIT " + resultsPerPage + " OFFSET " + offset : "");
+                (constraintString != "" ? "LIMIT " + resultsPerPage + " OFFSET " + offset : "");
             this.query = queryServiceWebsiteURL + encodeURIComponent(sparqlQuery);
             fullUrl = sparqlEndpoint + encodeURIComponent(sparqlQuery);
             axios.get(fullUrl)
