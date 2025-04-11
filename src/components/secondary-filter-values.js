@@ -800,6 +800,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
                     parameters = new URLSearchParams(q)
                     parameters.set("f." + vm.currentFilter.value + "." + vm.secondaryFilter.value, "novalue")
                     vm.noValueURL = window.location.pathname + "?" + parameters
+                    parentFilterString += "?temp wdt:" + vm.secondaryFilter.value + " ?value.\n";
                     // Gets items and their count.
                     if (centralSPARQLService) {
                         labelClause = "SERVICE <" + centralSPARQLService + "> {\n" +
@@ -827,8 +828,7 @@ secondayFilterValues = Vue.component('secondary-filters', {
                     }
 
                     sparqlQuery += vm.classSelector +
-                        "{\n?item wdt:" + vm.currentFilter.value + " ?temp .\n" +
-                        "?temp wdt:" + vm.secondaryFilter.value + " ?value\n}\n" +
+                        "?item wdt:" + vm.currentFilter.value + " ?temp .\n" +
                         filterString +
                         filterRanges +
                         filterQuantities +
