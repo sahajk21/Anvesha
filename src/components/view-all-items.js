@@ -58,7 +58,7 @@ viewallitems = Vue.component('view-all-items', {
                 <p v-else-if="items[0].value=='Empty'">{{ websiteText.noItems||fallbackText.noItems }}</p>
                 <p v-else-if="items[0].value=='Error'">{{ websiteText.displayItemsError||fallbackText.displayItemsError }}</p>
                 <div v-else-if="window.showThumbnails">
-                    <a v-for="item in sortSinglePageValues(items)" :href="linkToActualItem(item.value.value)" :title="item.overlay" class="externalLink">
+                    <a v-for="item in sortSinglePageValues(items)" :href="linkToFilePage(item.file.value)" :title="item.overlay" class="externalLink">
                         <div v-if="item.thumbnailURL" class="thumbnailImage">
                             <figure>
                                 <div class="imageWrapper">
@@ -215,6 +215,10 @@ viewallitems = Vue.component('view-all-items', {
         },
         linkToActualItem(item) {
             return itemURLStart + item.split('/').slice(-1)[0] + "?uselang=" + (urlParams.get('lang') ? urlParams.get('lang') : (defaultLanguages[0] ? defaultLanguages[0] : 'en'))
+        },
+        linkToFilePage(item) {
+            return fileURLStart + item.split('/').slice(-1)[0].replaceAll('%20', '_') + "?uselang=" +
+                (urlParams.get('lang') ? urlParams.get('lang') : (defaultLanguages[0] ? defaultLanguages[0] : 'en'));
         },
         addFileInformationToItems() {
             for ( i = 0; i < this.items.length; i++ ) {

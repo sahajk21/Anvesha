@@ -23,6 +23,7 @@ valueTypeConstraint = window.VALUE_TYPE_CONSTRAINT || "Q21510865";
 fallbackQueryLimit = window.FALLBACK_QUERY_LIMIT || 300;
 linksInTopNav = window.LINKS_IN_TOPNAV || {};
 itemURLStart = window.ITEM_URL_START || "https://www.wikidata.org/wiki/";
+fileURLStart = window.FILE_URL_START || 'https://commons.wikimedia.org/wiki/File:';
 showThumbnails = window.SHOW_THUMBNAILS || false;
 thumbnailURLStart = window.THUMBNAIL_URL_START;
 classlessFilters = window.CLASSLESS_FILTERS || null;
