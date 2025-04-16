@@ -25,7 +25,7 @@ linksInTopNav = window.LINKS_IN_TOPNAV || {};
 itemURLStart = window.ITEM_URL_START || "https://www.wikidata.org/wiki/";
 fileURLStart = window.FILE_URL_START || 'https://commons.wikimedia.org/wiki/File:';
 showThumbnails = window.SHOW_THUMBNAILS || false;
-thumbnailURLStart = window.THUMBNAIL_URL_START;
+thumbnailURLStart = window.THUMBNAIL_URL_START || 'https://upload.wikimedia.org/wikipedia/commons/thumb/';
 classlessFilters = window.CLASSLESS_FILTERS || null;
 noClasses = classlessFilters !== null;
 wikidataMonthIDs = [ 'Q108', 'Q109', 'Q110', 'Q118', 'Q119', 'Q120', 'Q121', 'Q122', 'Q123', 'Q124', 'Q125', 'Q126' ];
