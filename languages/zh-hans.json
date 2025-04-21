@@ -3,6 +3,7 @@
 		"authors": [
 			")8",
 			"LittlePaw365",
+			"Mishidexfc",
 			"Shimamura Sakura",
 			"列维劳德"
 		]
@@ -16,6 +17,8 @@
 	"noItems": "没有项目符合此描述。",
 	"displayItemsError": "显示列表耗时过久；请考虑增加更多过滤器。",
 	"gettingValues": "正在为 $1 过滤器获取值……",
+	"filterValuePlaceholder": "输入筛选值",
+	"customFilterValue": "您还可以为此过滤器选择自定义值：",
 	"noAdditionalValues": "$1 过滤器没有更多的值了。",
 	"filterError": "为过滤器 $1 获取值耗时过久。",
 	"filterTimeout": "（取得过滤器 $1 所有的耗时太久；所以，下面是可能不完整的集合。）",
@@ -24,8 +27,9 @@
 	"noValue": "没有值",
 	"changeClassNote": "（提醒：如果您更改类别，您将会丢失当前的过滤器集。）",
 	"specificClass": "切换到更具体的类别：",
-	"generalClass": "切换到更一般的类别：",
+	"generalClass": "更改为更通用的分类：",
 	"viewList": "查看项目列表",
+	"backToMain": "返回主页",
 	"results": "({{PLURAL:$1|$1 个结果}})",
 	"applyLinkedFilter": "为 $1 应用过滤器",
 	"chooseLinkedFilter": "从下列中的一个类别中选择过滤器："

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Hedda",
+			"Leo",
 			"MuratTheTurkish"
 		]
 	},
@@ -14,6 +15,8 @@
 	"noItems": "Bu tanımla eşleşen öge yok.",
 	"displayItemsError": "Ögelerin listesini görüntüleme denemesi çok uzun sürdü; lütfen, daha fazla filtre eklemeyi düşünün.",
 	"gettingValues": "$1 filtresi için değerler alınıyor ...",
+	"filterValuePlaceholder": "Süzgeç değerini girin",
+	"customFilterValue": "Bu süzgeç için özel bir değer de seçebilirsiniz:",
 	"noAdditionalValues": "$1 filtresi için ek değer yok.",
 	"filterError": "$1 filtresi için değerleri almaya çalışmak çok uzun sürdü.",
 	"filterTimeout": "($1 filtresi için tam bir değer kümesi almak çok uzun sürdü; bunun yerine, burada muhtemelen eksik bir küme var.)",
@@ -24,6 +27,7 @@
 	"specificClass": "Daha belirgin bir sınıf seçin:",
 	"generalClass": "Daha genel bir sınıf seçin:",
 	"viewList": "Öge listesini görüntüle",
+	"backToMain": "Anasayfaya geri dön",
 	"results": "({{PLURAL:$1|1 sonuç|$1 sonuç}})",
 	"applyLinkedFilter": "$1 üzerinde filtreyi uygulayın",
 	"chooseLinkedFilter": "Aşağıdaki sınıflardan birinden bir filtre seçin:"
