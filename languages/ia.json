@@ -13,6 +13,8 @@
 	"noItems": "Nulle elemento corresponde a iste description.",
 	"displayItemsError": "Le tentativa de monstrar le lista de elementos ha prendite troppo de tempore; considera adder plus filtros.",
 	"gettingValues": "Obtene valores pro filtro $1 …",
+	"filterValuePlaceholder": "Insere valor de filtro",
+	"customFilterValue": "Tu pote etiam eliger un valor personalisate pro iste filtro:",
 	"noAdditionalValues": "Il non ha valores additional pro le filtro $1.",
 	"filterError": "Tentar obtener valores ha prendite troppo de tempore pro le filtro $1.",
 	"filterTimeout": "(Obtener un insimul complete de valores pro le filtro $1 ha prendite troppo de tempore; in su loco, ecce un insimul possibilemente incomplete.)",
@@ -23,6 +25,7 @@
 	"specificClass": "Passar a un classe plus specific:",
 	"generalClass": "Passar a un classe plus general:",
 	"viewList": "Vider le lista de elementos",
+	"backToMain": "Retornar al pagina principal",
 	"results": "($1 resultato{{PLURAL:$1||s}})",
 	"applyLinkedFilter": "Applicar filtro sur $1",
 	"chooseLinkedFilter": "Elige un filtro de un del sequente classes:"
