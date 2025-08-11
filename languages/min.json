@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Adhmi"
+		]
+	},
+	"itemCount": "Ado {{PLURAL:$1| adolah salah satu barang nan cocok|adolah $1 barang nan cocok}} jo uraian iko.",
+	"classPlaceholder": "Masuak kelas",
+	"browse": "Atau, manjalajah salah satu dari kelas barikuik:",
+	"noFiltersDefined": "Indak ado saringan nan ditantuan untuak kelas iko.",
+	"addFilter": "Tambah sariangan",
+	"viewQuery": "Caliak pamintaan SPARQL",
+	"noItems": "Indak ado barang nan sasuai jo uraian ko.",
+	"displayItemsError": "Usaho untuak manampilkan daftar barang tu talalu lamo; silakan patimbangkan untuak manambahkan saringan lainnyo.",
+	"gettingValues": "Mandapekkan nilai untuak saringan $1 ...",
+	"filterValuePlaceholder": "Masuakkan nilai saringan",
+	"customFilterValue": "Sanak dapek pulo mamiliah nilai khusus untuak sariangan ko:",
+	"noAdditionalValues": "Indak ado nilai tambahan untuak saringan $1 .",
+	"filterError": "Mancubo mandapekkan nilai mamakan wakatu talalu lamo untuak filter $1 .",
+	"filterTimeout": "(Mandapekkan sakumpulan nilai langkok untuak filter $1 mamakan wakatu talalu lamo; sabaliaknyo, di siko ado sakumpulan nan kamungkinan indak langkok.)",
+	"selectValue": "Piliah nilai untuak $1 :",
+	"selectAdditionalValue": "Piliah nilai tambahan untuak $1 :",
+	"noValue": "Indak ado nilai",
+	"changeClassNote": "(Catatan: jikok Sanak maubah kelas, Sanak akan kahilangan filter nan kini.)",
+	"specificClass": "Ganti ka kelas nan labiah khusus:",
+	"generalClass": "Ganti ka kelas nan labiah umum:",
+	"viewList": "Caliak daftar barang",
+	"backToMain": "Baliak ka laman utamo",
+	"results": "( {{PLURAL:$1| 1 hasia| $1 hasia}})",
+	"applyLinkedFilter": "Terapkan sariangan pado $1",
+	"chooseLinkedFilter": "Piliah saringan dari salah satu kelas barikuik:"
+}
