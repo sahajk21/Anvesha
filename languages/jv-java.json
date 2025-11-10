@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bennylin"
+		]
+	},
+	"itemCount": "ꦲꦤ{{PLURAL:$1|$1ꦮꦶꦗꦶ}}ꦱꦶꦁ​ꦕꦺꦴꦕꦺꦴꦏ꧀ꦏꦫꦺꦴ​ꦢꦺꦱ꧀ꦏꦿꦶꦥ꧀ꦱꦶ​ꦲꦶꦏꦶ꧉",
+	"classPlaceholder": "ꦊꦧꦺꦴꦏ꧀ꦏꦏꦺ​ꦏꦼꦭꦱ꧀",
+	"browse": "ꦲꦸꦠꦮ​ꦠꦼꦭꦸꦱꦸꦂꦫꦶ​ꦱꦭꦃ​ꦱꦶꦗꦶꦤꦶꦁ​ꦏꦼꦭꦱ꧀ꦲꦶꦏꦶ꧇",
+	"noFiltersDefined": "ꦲꦺꦴꦫ​ꦲꦤ​ꦥ꦳ꦶꦭ꧀ꦠꦼꦂ​ꦏꦁꦒꦺꦴ​ꦏꦼꦭꦱ꧀ꦲꦶꦏꦶ꧉",
+	"addFilter": "ꦠꦩ꧀ꦧꦃ​ꦥ꦳ꦶꦭ꧀ꦠꦼꦂ",
+	"viewQuery": "ꦠꦸꦢꦸꦃꦲꦏꦺ​ꦏꦸꦮꦺꦫꦶSPARQL",
+	"noItems": "ꦲꦺꦴꦫ​ꦲꦤ​ꦮꦶꦗꦶ​ꦱꦶꦁ​ꦕꦺꦴꦕꦺꦴꦒ꧀ꦏꦫꦺꦴ​ꦢꦺꦱ꧀ꦏꦿꦶꦥ꧀ꦱꦶ​ꦲꦶꦏꦶ꧉",
+	"displayItemsError": "Percobaan untuk menampilkan daftar item terlalu lama; harap pertimbangkan untuk menambahkan lebih banyak filter.",
+	"gettingValues": "ꦚ꧀ꦗꦸꦥꦸꦏ꧀ꦤꦶꦭꦻ​ꦏꦁꦒꦺꦴ​ꦥ꦳ꦶꦭ꧀ꦠꦺꦂ$1…",
+	"filterValuePlaceholder": "ꦊꦧꦺꦴꦏ꧀ꦏꦏꦺ​ꦤꦶꦭꦻ​ꦥ꦳ꦶꦭ꧀ꦠꦼꦂ",
+	"customFilterValue": "ꦲꦸꦠꦮ​ꦥꦶꦭꦶꦃ​ꦤꦶꦭꦻ​ꦏꦱ꧀ꦠꦼꦩ꧀ꦏꦁꦒꦺꦴ​ꦥ꦳ꦶꦭ꧀ꦠꦺꦂ​ꦲꦶꦏꦶ꧇",
+	"noAdditionalValues": "ꦲꦺꦴꦫ​ꦲꦤ​ꦤꦶꦭꦻ​ꦠꦩ꧀ꦧꦃꦲꦤ꧀ꦏꦁꦒꦺꦴ​ꦥ꦳ꦶꦭ꧀ꦠꦺꦂ$1꧉",
+	"filterError": "Percobaan untuk mendapatkan nilai terlalu lama untuk filter $1.",
+	"filterTimeout": "(Mendapatkan kumpulan nilai lengkap untuk filter $1 membutuhkan waktu terlalu lama; sebagai gantinya, berikut adalah kumpulan yang mungkin tidak lengkap.)",
+	"selectValue": "ꦥꦶꦭꦶꦃ​ꦤꦶꦭꦻ​ꦏꦁꦒꦺꦴ$1꧇",
+	"selectAdditionalValue": "ꦥꦶꦭꦶꦃ​ꦤꦶꦭꦻ​ꦠꦩ꧀ꦧꦃꦲꦤ꧀ꦏꦁꦒꦺꦴ$1꧇",
+	"noValue": "ꦲꦺꦴꦫ​ꦲꦤ​ꦤꦶꦭꦻ",
+	"changeClassNote": "(Catatan: jika Anda mengubah kelas, set filter yang Anda pilih hilang.)",
+	"specificClass": "ꦲꦺꦴꦮꦃꦲꦶ​ꦩꦺꦚꦁ​ꦏꦼꦭꦱ꧀ꦱꦶꦁ​ꦭꦸꦮꦶꦃ​ꦱ꧀ꦥꦺꦱꦶꦥ꦳ꦶꦏ꧀꧇",
+	"generalClass": "ꦲꦺꦴꦮꦃꦲꦶ​ꦩꦺꦚꦁ​ꦏꦼꦭꦱ꧀ꦱꦶꦁ​ꦭꦸꦮꦶꦃ​ꦲꦸꦩꦸꦩ꧀꧇",
+	"viewList": "ꦠꦸꦢꦸꦃꦲꦏꦺ​ꦥꦿꦠꦺꦭ꧀ꦭꦤ꧀ꦮꦶꦗꦶ",
+	"backToMain": "ꦧꦭꦶ​ꦩꦼꦚꦁ​ꦥꦼꦤ꧀ꦝꦥ",
+	"results": "({{PLURAL:$1|$1ꦏꦱꦶꦭ꧀}})",
+	"applyLinkedFilter": "ꦠꦼꦫꦥ꧀ꦤꦺ​ꦥ꦳ꦶꦭ꧀ꦠꦼꦂ​ꦩꦺꦚꦁ​$1",
+	"chooseLinkedFilter": "ꦥꦶꦭꦶꦃ​ꦥ꦳ꦶꦭ꧀ꦠꦺꦂ​ꦱꦏ​ꦱꦭꦃ​ꦱꦶꦗꦶꦤꦶꦁ​ꦏꦼꦭꦱ꧀ꦲꦶꦏꦶ꧇"
+}
