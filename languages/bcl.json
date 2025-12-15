@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jp2593"
+		]
+	},
+	"itemCount": "Igwang {{PLURAL:$1|sarong bagay na katumbas|igwang $1 na mga bagay na katumbas}} kaining deskripsyon.",
+	"classPlaceholder": "Ikaag an klase",
+	"browse": "O, mag-browse kan arin man sa minasunod na mga klase:",
+	"noFiltersDefined": "Mayo nin saraan na tinawan kahulugan para sa klaseng ini.",
+	"addFilter": "Magdagdag nin saraan",
+	"viewQuery": "Hilingon an panhanap na SPARQL",
+	"noItems": "Mayo nin bagay na nakakatampad sa deskripsyon na ini.",
+	"displayItemsError": "An pagprobar na ipahiling an listahan kan mga bagay nahaloyan; pakikonsiderar na magdagdag nin mga saraan.",
+	"gettingValues": "Kinukua an mga opsyon para sa saraan $1 ...",
+	"filterValuePlaceholder": "Ilaag an parametro kan saraan",
+	"customFilterValue": "Pwede ka man magpili nin sarong pasadyang parametro para sa saraan na ini:",
+	"noAdditionalValues": "Mayo nin mga dagdag na parametro para sa saraan $1.",
+	"filterError": "An pagprobar na makakua nin mga parametro nahaloy para sa saraan na $1.",
+	"filterTimeout": "(An pagkua nin sarong kumpletong set nin mga parametro para sa saraan $1 nahaloy; imbes, uni an sarong posibleng bako kumpletong set.)",
+	"selectValue": "Magpili nin parametro para sa $1:",
+	"selectAdditionalValue": "Magpili nin dagdag na parametro para sa $1:",
+	"noValue": "Mayo nin parametro",
+	"changeClassNote": "(Tandaan: kun babaguhon mo an klase, mawawara an presenteng set nin mga saraan.)",
+	"specificClass": "Ibalyo sa mas espesipikong klase:",
+	"generalClass": "Ibalyo sa mas pankagabsan na klase:",
+	"viewList": "Hilngon an lista nin mga bagay",
+	"backToMain": "Balik sa pangenot na pahina",
+	"results": "({{PLURAL:$1|1 resulta|$1 mga resulta}})",
+	"applyLinkedFilter": "Aplikaron an saraan sa $1",
+	"chooseLinkedFilter": "Pumili nin sarong saraan gikan sa saro sa minasunod na mga klase:"
+}
