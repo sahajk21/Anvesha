@@ -3,7 +3,8 @@
 		"authors": [
 			"Fitoschido",
 			"Jack30",
-			"Jesusmc"
+			"Jesusmc",
+			"Tecbs"
 		]
 	},
 	"itemCount": "Hay {{PLURAL: $1|un elemento que coincide con|$1 elementos que coinciden con}} esta descripción.",
@@ -15,6 +16,8 @@
 	"noItems": "Ningún artículo coincide con esta descripción.",
 	"displayItemsError": "El intento de mostrar la lista de elementos tomó demasiado tiempo; por favor considera agregar más filtros.",
 	"gettingValues": "Obtener valores para el filtro $1",
+	"filterValuePlaceholder": "Introduzca el valor del filtro",
+	"customFilterValue": "También puedes elegir un valor personalizado para este filtro:",
 	"noAdditionalValues": "No hay valores adicionales para el filtro $1.",
 	"filterError": "Intentando obtener valores tomó demasiado tiempo para el filtro $1",
 	"filterTimeout": "(Obtener un conjunto completo de valores para el filtro $1 tomó demasiado tiempo; en cambio, aquí hay un conjunto posiblemente incompleto).",
@@ -25,6 +28,7 @@
 	"specificClass": "Cambiar a una clase más específica:",
 	"generalClass": "Cambiar a una clase más general:",
 	"viewList": "Ver lista de elementos",
+	"backToMain": "Ir a página principal",
 	"results": "({{PLURAL:$1|1 resultado|$1 resultados}})",
 	"applyLinkedFilter": "aplicar filtro en $1",
 	"chooseLinkedFilter": "escoger un filtro de una de las siguientes clases:"
