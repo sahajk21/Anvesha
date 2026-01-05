@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Sabelöga",
+			"Stefan2255",
 			"WikiPhoenix"
 		]
 	},
@@ -14,6 +15,8 @@
 	"noItems": "Inge objekt matchar den här beskrivningen.",
 	"displayItemsError": "Försök att visa listan över objekt tog för lång tid; överväg att lägga till fler filter.",
 	"gettingValues": "Hämtar värden för filter $1...",
+	"filterValuePlaceholder": "Ange filtervärde",
+	"customFilterValue": "Du kan också välja ett anpassat värde för det här filtret:",
 	"noAdditionalValues": "Det finns inte ytterligare värden för filter $1...",
 	"filterError": "Försök att hämta värden tog för lång tid för filter $1.",
 	"filterTimeout": "(Hämtningen av en fullständig uppsättning värden för filter $1 tog för lång tid; istället följer här en kanske ofullständig uppsättning.)",
@@ -24,6 +27,7 @@
 	"specificClass": "Ändra till en mer specifik klass:",
 	"generalClass": "Ändra till en mer allmän klass:",
 	"viewList": "Visa lista över objekt",
+	"backToMain": "Tillbaka till huvudsidan",
 	"results": "({{PLURAL:$1|1 resultat|$1 resultat}})",
 	"applyLinkedFilter": "Tillämpa filter på $1",
 	"chooseLinkedFilter": "Välj ett filter från en av följande klasser:"
