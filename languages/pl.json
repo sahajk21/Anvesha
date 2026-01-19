@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Atvalerie",
 			"Kareyac",
 			"Luku123"
 		]
@@ -14,6 +15,8 @@
 	"noItems": "Żaden element nie zgadza się z tym opisem.",
 	"displayItemsError": "Próba wyświetlenia listy elementów trwała za długo; proszę rozważyć dodanie większej ilości filtrów.",
 	"gettingValues": "Pobieranie wartości dla filtra $1 ...",
+	"filterValuePlaceholder": "Wprowadź wartość filtra",
+	"customFilterValue": "Możesz również wybrać niestandardową wartość tego filtru:",
 	"noAdditionalValues": "Nie ma dodatkowych wartości dla filtra $1.",
 	"filterError": "Próba uzyskania wartości trwała za długo dla filtra $1.",
 	"filterTimeout": "(Uzyskiwanie kompletnego zestawu wartości dla filtra $1 trwało za długo; zamiast tego tutaj jest prawdopodobnie niekompletny zestaw.)",
@@ -24,6 +27,7 @@
 	"specificClass": "Zmień na bardziej szczegółową klasę:",
 	"generalClass": "Zmień na bardziej ogólną klasę:",
 	"viewList": "Pokaż listę elementów",
+	"backToMain": "Powrót do strony głównej",
 	"results": "({{PLURAL:$1|1 wynik|$1 wyniki}})",
 	"applyLinkedFilter": "Zastosuj filtr na $1",
 	"chooseLinkedFilter": "Wybierz filtr z jednej z następujących klas:"
