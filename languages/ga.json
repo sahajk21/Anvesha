@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aindriu80"
+		]
+	},
+	"itemCount": "Tá {{PLURAL:$1|earra amháin a mheaitseálann|tá $1 earra a mheaitseálann}} an tuairisc seo.",
+	"classPlaceholder": "Iontráil rang",
+	"browse": "Nó, brabhsáil aon cheann de na ranganna seo a leanas:",
+	"noFiltersDefined": "Níl aon scagaire sainmhínithe don rang seo.",
+	"addFilter": "Cuir scagaire leis",
+	"viewQuery": "Féach ar an bhfiosrúchán SPARQL",
+	"noItems": "Níl aon mhír a mheaitseálann an cur síos seo.",
+	"displayItemsError": "Thóg an iarracht an liosta míreanna a thaispeáint ró-fhada; smaoinigh le do thoil ar níos mó scagairí a chur leis.",
+	"gettingValues": "Ag fáil luachanna don scagaire $1 ...",
+	"filterValuePlaceholder": "Cuir isteach luach scagaire",
+	"customFilterValue": "Is féidir leat luach saincheaptha a roghnú don scagaire seo freisin:",
+	"noAdditionalValues": "Níl aon luachanna breise ann don scagaire $1.",
+	"filterError": "Thóg sé ró-fhada luachanna a fháil don scagaire $1.",
+	"filterTimeout": "(Thóg sé ró-fhada tacar iomlán luachanna a fháil don scagaire $1; ina ionad sin, seo tacar nach bhfuil iomlán b'fhéidir.)",
+	"selectValue": "Roghnaigh luach le haghaidh $1:",
+	"selectAdditionalValue": "Roghnaigh luach breise le haghaidh $1:",
+	"noValue": "Gan luach",
+	"changeClassNote": "(Nóta: má athraíonn tú an rang, caillfidh tú an tacar scagairí reatha.)",
+	"specificClass": "Athraigh go rang níos sainiúla:",
+	"generalClass": "Athraigh go rang níos ginearálta:",
+	"viewList": "Féach ar liosta na míreanna",
+	"backToMain": "Ar ais go dtí an príomhleathanach",
+	"results": "({{PLURAL:$1|1 thoradh|$1 toradh}})",
+	"applyLinkedFilter": "Cuir scagaire i bhfeidhm ar $1",
+	"chooseLinkedFilter": "Roghnaigh scagaire ó cheann de na haicmí seo a leanas:"
+}
