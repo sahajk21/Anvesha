@@ -3,7 +3,8 @@
 		"authors": [
 			"Atvalerie",
 			"Kareyac",
-			"Luku123"
+			"Luku123",
+			"Woytecr"
 		]
 	},
 	"itemCount": "Tu {{PLURAL:$1|jest jeden element która się zgadza|są $1 elementy które się zgadzają}} z tym opisem.",
@@ -28,7 +29,7 @@
 	"generalClass": "Zmień na bardziej ogólną klasę:",
 	"viewList": "Pokaż listę elementów",
 	"backToMain": "Powrót do strony głównej",
-	"results": "({{PLURAL:$1|1 wynik|$1 wyniki}})",
+	"results": "({{PLURAL:$1|1 wynik|$1 wyniki|$1 wyników}})",
 	"applyLinkedFilter": "Zastosuj filtr na $1",
 	"chooseLinkedFilter": "Wybierz filtr z jednej z następujących klas:"
 }
