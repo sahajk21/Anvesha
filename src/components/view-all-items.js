@@ -214,7 +214,12 @@ viewallitems = Vue.component('view-all-items', {
             this.$emit('update-filter', filter)
         },
         linkToActualItem(item) {
-            return itemURLStart + item.split('/').slice(-1)[0] + "?uselang=" + (urlParams.get('lang') ? urlParams.get('lang') : (defaultLanguages[0] ? defaultLanguages[0] : 'en'))
+            var itemID = item.split('/').slice(-1)[0];
+            if ( itemID.charAt(0) == 'L' ) {
+                // It's a lexeme - remove suffixes (like "-F1") and add the "Lexeme:" namespace.
+                itemID = 'Lexeme:' + itemID.split('-')[0];
+            }
+            return itemURLStart + itemID + "?uselang=" + (urlParams.get('lang') ? urlParams.get('lang') : (defaultLanguages[0] ? defaultLanguages[0] : 'en'));
         },
         linkToFilePage(item) {
             return fileURLStart + item.split('/').slice(-1)[0].replaceAll('%20', '_') + "?uselang=" +
@@ -497,3 +502,4 @@ viewallitems = Vue.component('view-all-items', {
         }
     }
 })
+
