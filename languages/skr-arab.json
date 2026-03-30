@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saraiki"
+		]
+	},
+	"classPlaceholder": "جماعت درج کرو",
+	"addFilter": "چھاݨاں شامل کرو",
+	"selectValue": "$1 کیتے قیمت چݨو:",
+	"selectAdditionalValue": "$1 کیتے  ہک وادھوں قدر چݨو:",
+	"noValue": "کوئی قدر کائنی",
+	"specificClass": "زیادہ مخصوص جماعت تے وٹاؤ:",
+	"generalClass": "زیادہ عام جماعت تے وٹاؤ:",
+	"viewList": "آئٹماں دی تندیر ݙیکھو",
+	"backToMain": "وݙے ورقے واپس",
+	"results": "({{PLURAL:$1|1 نتیجہ|$1 نتیجے}})",
+	"applyLinkedFilter": "$1 تے چھاݨاں لاؤ"
+}
