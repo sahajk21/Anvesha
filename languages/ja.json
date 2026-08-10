@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dacchi Hii",
+			"Largestone",
+			"もなー(偽物)"
+		]
+	},
+	"itemCount": "この説明に一致する項目が{{PLURAL:$1| $1件あります}}。",
+	"classPlaceholder": "クラスを入力",
+	"browse": "または、以下のいずれかのクラスを閲覧します：",
+	"noFiltersDefined": "このクラスにはフィルターが定義されていません。",
+	"addFilter": "フィルターを追加",
+	"viewQuery": "SPARQLクエリを閲覧",
+	"noItems": "条件に一致する項目はありません。",
+	"displayItemsError": "項目のリストを表示するのに時間がかかりすぎました。フィルターをもっと追加してみてください。",
+	"gettingValues": "フィルター$1の値を取得中…",
+	"filterValuePlaceholder": "フィルターの値を入力",
+	"customFilterValue": "このフィルターに対してカスタム値を指定することもできます：",
+	"noAdditionalValues": "フィルター$1には追加の値はありません。",
+	"filterError": "フィルター$1の値を取得するのに時間がかかりすぎました。",
+	"filterTimeout": "（フィルター$1の完全な値セットを取得するのに時間がかかりすぎました。代わりに、不完全な可能性のあるセットをここに示します。）",
+	"selectValue": "$1の値を選択：",
+	"selectAdditionalValue": "$1の追加の値を選択：",
+	"noValue": "値なし",
+	"changeClassNote": "（注意：クラスを変更すると、現在のフィルターのセットは失われます。）",
+	"specificClass": "より具体的なクラスに変更する：",
+	"generalClass": "より抽象的なクラスに変更する：",
+	"viewList": "項目のリストを表示",
+	"backToMain": "メインページに戻る",
+	"results": "（{{PLURAL:$1|1件の結果|$1件の結果}}）",
+	"applyLinkedFilter": "$1のフィルターを適用",
+	"chooseLinkedFilter": "以下のクラスの1つからフィルターを選択："
+}
