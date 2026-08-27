@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"EmeseToth"
+		]
+	},
+	"itemCount": "Erre a leírásra {{PLURAL:$1|egy elem felel meg|$1 elem felel meg}}.",
+	"classPlaceholder": "Osztály megadása",
+	"browse": "Vagy böngéssz az alábbi kurzusok között:",
+	"noFiltersDefined": "Ehhez az osztályhoz nincs definiálva szűrő.",
+	"addFilter": "Szűrő hozzáadása",
+	"viewQuery": "SPARQL lekérdezés megtekintése",
+	"noItems": "Egyik elem sem felel meg ennek a leírásnak.",
+	"displayItemsError": "A tételek listájának megjelenítésére tett kísérlet túl sokáig tartott; fontold meg további szűrők hozzáadását.",
+	"gettingValues": "Értékek lekérése a(z) $1 szűrőhöz...",
+	"filterValuePlaceholder": "A szűrő értékének megadása",
+	"customFilterValue": "Egyéni értéket is választhatsz ehhez a szűrőhöz:",
+	"noAdditionalValues": "A(z) $1 szűrőhöz nincsenek további értékek.",
+	"filterError": "Az értékek lekérése túl sokáig tartott a(z) $1 szűrő esetében.",
+	"filterTimeout": "(A(z) $1 szűrő teljes értékhalmazának összegyűjtése túl sok időt vett igénybe; helyette itt egy esetleg nem teljes halmaz található.)",
+	"selectValue": "Válassz értéket a(z) $1 számára:",
+	"selectAdditionalValue": "Válassz ki egy további értéket $1 számára:",
+	"noValue": "Nincs érték",
+	"changeClassNote": "(Megjegyzés: ha megváltoztatod az osztályt, az aktuális szűrőkészlet elveszik.)",
+	"specificClass": "Válts egy konkrétabb osztályra:",
+	"generalClass": "Válts egy általánosabb osztályra:",
+	"viewList": "Elemek listájának megtekintése",
+	"backToMain": "Vissza a főlapra",
+	"results": "({{PLURAL:$1|1 találat|$1 találat}})",
+	"applyLinkedFilter": "Szűrő alkalmazása $1-re",
+	"chooseLinkedFilter": "Válassz egy szűrőt az alábbi osztályok egyikéből:"
+}
